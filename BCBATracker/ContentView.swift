@@ -84,7 +84,11 @@ struct StudentsView: View {
                     // Student list
                     List {
                         ForEach(students) { student in
-                            StudentRow(student: student)
+                            NavigationLink {
+                                StudentDetailView(student: student)
+                            } label: {
+                                StudentRow(student: student)
+                            }
                         }
                     }
                     .listStyle(.insetGrouped)
@@ -209,6 +213,185 @@ struct AddStudentView: View {
 
         HapticManager.success()
         dismiss()
+    }
+}
+
+// MARK: - Student Detail View
+
+struct StudentDetailView: View {
+    let student: Student
+    @State private var showingDataCollection = false
+    @State private var selectedDataType: DataCollectionType?
+
+    enum DataCollectionType {
+        case frequency
+        case duration
+        case abc
+        case interval
+        case dtt
+        case taskAnalysis
+
+        var title: String {
+            switch self {
+            case .frequency: return "Frequency"
+            case .duration: return "Duration"
+            case .abc: return "ABC Data"
+            case .interval: return "Interval"
+            case .dtt: return "DTT Session"
+            case .taskAnalysis: return "Task Analysis"
+            }
+        }
+
+        var icon: String {
+            switch self {
+            case .frequency: return Constants.Icons.frequency
+            case .duration: return Constants.Icons.duration
+            case .abc: return Constants.Icons.abc
+            case .interval: return Constants.Icons.interval
+            case .dtt: return Constants.Icons.dtt
+            case .taskAnalysis: return Constants.Icons.taskAnalysis
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .frequency: return "Count occurrences of behavior"
+            case .duration: return "Measure how long behavior lasts"
+            case .abc: return "Record antecedent, behavior, consequence"
+            case .interval: return "Record behavior in time intervals"
+            case .dtt: return "Discrete trial teaching session"
+            case .taskAnalysis: return "Break down complex skills into steps"
+            }
+        }
+
+        var color: Color {
+            switch self {
+            case .frequency: return Constants.Colors.primary
+            case .duration: return Constants.Colors.accent
+            case .abc: return Constants.Colors.warning
+            case .interval: return Constants.Colors.secondary
+            case .dtt: return Constants.Colors.skillAcquisition
+            case .taskAnalysis: return Constants.Colors.success
+            }
+        }
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: Constants.UI.paddingLarge) {
+                // Student header
+                VStack(spacing: Constants.UI.paddingSmall) {
+                    Image(systemName: "person.circle.fill")
+                        .font(.system(size: 60))
+                        .foregroundColor(Constants.Colors.primary)
+
+                    Text(student.displayName)
+                        .font(.title)
+                        .fontWeight(.bold)
+
+                    Text("Grade \(student.grade)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, Constants.UI.paddingLarge)
+
+                // Data collection methods
+                VStack(alignment: .leading, spacing: Constants.UI.paddingMedium) {
+                    Text("Start Data Collection")
+                        .font(.headline)
+                        .padding(.horizontal)
+
+                    LazyVGrid(columns: [
+                        GridItem(.flexible(), spacing: Constants.UI.paddingMedium),
+                        GridItem(.flexible(), spacing: Constants.UI.paddingMedium)
+                    ], spacing: Constants.UI.paddingMedium) {
+                        DataCollectionButton(type: .frequency) {
+                            selectedDataType = .frequency
+                            showingDataCollection = true
+                        }
+
+                        DataCollectionButton(type: .duration) {
+                            selectedDataType = .duration
+                            showingDataCollection = true
+                        }
+
+                        DataCollectionButton(type: .abc) {
+                            selectedDataType = .abc
+                            showingDataCollection = true
+                        }
+
+                        DataCollectionButton(type: .interval) {
+                            selectedDataType = .interval
+                            showingDataCollection = true
+                        }
+
+                        DataCollectionButton(type: .dtt) {
+                            selectedDataType = .dtt
+                            showingDataCollection = true
+                        }
+
+                        DataCollectionButton(type: .taskAnalysis) {
+                            selectedDataType = .taskAnalysis
+                            showingDataCollection = true
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+
+                Spacer()
+            }
+        }
+        .navigationTitle("Student Details")
+        .navigationBarTitleDisplayMode(.inline)
+        .fullScreenCover(isPresented: $showingDataCollection) {
+            if let dataType = selectedDataType {
+                switch dataType {
+                case .frequency:
+                    FrequencyRecorderView(student: student)
+                case .duration:
+                    DurationRecorderView(student: student)
+                case .abc:
+                    ABCRecorderView(student: student)
+                case .interval:
+                    IntervalRecorderView(student: student)
+                case .dtt:
+                    DTTRecorderView(student: student)
+                case .taskAnalysis:
+                    TaskAnalysisRecorderView(student: student)
+                }
+            }
+        }
+    }
+}
+
+struct DataCollectionButton: View {
+    let type: StudentDetailView.DataCollectionType
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: Constants.UI.paddingSmall) {
+                Image(systemName: type.icon)
+                    .font(.system(size: 32))
+                    .foregroundColor(type.color)
+
+                Text(type.title)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.primary)
+
+                Text(type.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(type.color.opacity(0.1))
+            .cornerRadius(Constants.UI.cornerRadiusMedium)
+        }
+        .accessibilityLabel("\(type.title): \(type.description)")
     }
 }
 
