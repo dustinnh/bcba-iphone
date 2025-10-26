@@ -14,6 +14,8 @@ struct BCBATrackerApp: App {
     // MARK: - State Objects
     @StateObject private var dataManager = DataManager.shared
     @StateObject private var securityManager = SecurityManager.shared
+    @StateObject private var googleDriveManager = GoogleDriveManager.shared
+    @StateObject private var exportManager = ExportManager.shared
 
     // MARK: - Scene Phase
     @Environment(\.scenePhase) private var scenePhase
@@ -33,6 +35,8 @@ struct BCBATrackerApp: App {
                         .environment(\.managedObjectContext, dataManager.viewContext)
                         .environmentObject(dataManager)
                         .environmentObject(securityManager)
+                        .environmentObject(googleDriveManager)
+                        .environmentObject(exportManager)
                 } else {
                     // Authentication screen
                     AuthenticationView()

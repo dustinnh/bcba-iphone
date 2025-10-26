@@ -46,7 +46,6 @@ struct ContentView: View {
 struct StudentsView: View {
     @EnvironmentObject var dataManager: DataManager
     @FetchRequest(
-        entity: Student.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Student.firstName, ascending: true)],
         predicate: NSPredicate(format: "isActive == %@", NSNumber(value: true))
     ) var students: FetchedResults<Student>
@@ -217,7 +216,6 @@ struct AddStudentView: View {
 
 struct SessionsView: View {
     @FetchRequest(
-        entity: Session.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Session.startTime, ascending: false)]
     ) var sessions: FetchedResults<Session>
 
