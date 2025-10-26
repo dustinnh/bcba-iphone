@@ -61,9 +61,22 @@
 		2B4829392EAD3E0B00D2CEF4 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2B704ACC2EADB0DA00D2CEF4 /* Exceptions for "BCBATracker" folder in "BCBATracker" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2B4828D22EAD3C2E00D2CEF4 /* BCBATracker */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2B4828D52EAD3C2E00D2CEF4 /* BCBATracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2B704ACC2EADB0DA00D2CEF4 /* Exceptions for "BCBATracker" folder in "BCBATracker" target */,
+			);
 			path = BCBATracker;
 			sourceTree = "<group>";
 		};
@@ -540,6 +553,7 @@
 				DEVELOPMENT_TEAM = Z62H533LZG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BCBATracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -572,6 +586,7 @@
 				DEVELOPMENT_TEAM = Z62H533LZG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BCBATracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -21,9 +21,9 @@ enum Constants {
 
     // MARK: - Google Drive Configuration
     enum GoogleDrive {
-        // NOTE: Replace with your actual Google OAuth Client ID
+        // Google OAuth Client ID from Google Cloud Console
         // Get from: https://console.cloud.google.com/apis/credentials
-        static let clientID = "YOUR_CLIENT_ID_HERE.apps.googleusercontent.com"
+        static let clientID = "984583875270-86oivq4d797drjs1kjgai5jr550ul2il.apps.googleusercontent.com"
 
         // Google Drive folder where backups are stored
         static let backupFolderName = "BCBA Tracker Backups"
